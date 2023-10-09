@@ -37,20 +37,59 @@
                     <h1 class = "sub-title">About Me</h1>
                     <p>n publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before final copy is available.</p>
                     <div class="tab-titles">
-                        <p class="tab-links active-link">Skills</p>
-                        <p class="tab-links">Experience</p>
-                        <p class="tab-links">Education</p>
+                        <p class="tab-links active-link" onclick="opentab('skills')">Skills</p>
+                        <p class="tab-links" onclick="opentab('experience')">Experience</p>
+                        <p class="tab-links" onclick="opentab('education')">Education</p>
                     </div>
-                    <div class="tab-contents">
+                    <div class="tab-contents active-tab" id = "skills">
                         <ul>
                             <li><span>Software Development</span><br>Designing Applications using Python,Java and C++</li>
                             <li><span>Data Analysis</span><br>Performing Complex Data operations on large Datasets using Python and R</li>
                             <li><span>Web Development</span><br>Designing Web Interfaces</li>
                         </ul>
                     </div>
+                    <div class="tab-contents" id = "experience">
+                        <ul>
+                            <li><span>Jan. 2022 - Apr. 2022</span><br>Software Developer Intern at <a href="http://infiniai.tech">InfiniAI</a></li>
+                            <li><span>Oct. 2022 - Sep. 2023</span><br>Catering Associate at Nest Catering and Conference Services</li>
+                        </ul>
+                    </div>
+                    <div class="tab-contents" id  = "education">
+                        <ul>
+                            <li><span>2021-2025</span><br>Bachelors of Science in Computer Science & Statistics at University of British Columbia</li>
+                            <li><span>2021</span><br>All India Senior School Certificate Examination at Amity International School </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+    <!-- ------------------------Services--------------- -->
+    <div id="services">
+        <div class="container">
+            <h1 class = "sub-title">My Projects</h1>
+            <div class="services-list">
+
+            </div>
+        </div>
+    </div>
+    <script>
+
+        var tabLinks = document.getElementsByClassName("tab-links");
+        var tabContents = document.getElementsByClassName("tab-contents");
+        function opentab(tabname) {
+            for (tablink of tabLinks) {
+                tablink.classList.remove("active-link");
+            }
+
+            for (tabcontent of tabContents) {
+                tabcontent.classList.remove("active-tab");
+            }
+            event.currentTarget.classList.add("active-link");
+            document.getElementById(tabname).classList.add("active-tab");
+        }
+
+
+    </script>
     </body>
 </html>

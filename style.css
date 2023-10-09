@@ -134,8 +134,28 @@ nav ul li a:hover::after{
     margin: 10px 0;
 }
 
+.tab-contents ul li a{
+    color: #ababab;
+    text-decoration: none;
+    position: relative;
+}
+
 .tab-contents ul li span{
     display: inline-block;
     font-weight: bold;
     color: #ff004f;
 }
+
+.tab-contents{
+    display: none;
+}
+
+.tab-contents.active-tab{
+    display: block;
+}
+
+/* ------------------Services________________ */
+
+
+
+
