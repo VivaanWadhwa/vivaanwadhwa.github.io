@@ -19,13 +19,18 @@ body{
     background-position: center;
 }
 #container{
-    padding: 10px 10%;
+    padding: 10px 0%;
+    margin-top: -20px;
 }
 nav{
     display: flex;
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
+    position: fixed;
+    background-color: #080808;
+    width: 100%;
+    z-index: 9999; /* set a high z-index value */
 }
 #logo{
     width: 10px;
@@ -65,6 +70,7 @@ nav ul li a:hover::after{
 .header-text h1{
     font-size: 60px;
     margin-top: 20px;
+    margin-left: 10%;
 }
 .header-text h1 span{
     color: #ff004f;
@@ -100,6 +106,29 @@ nav ul li a:hover::after{
     color: #fff;
 }
 
+/* Define styles for the star ratings */
+.skill-rating {
+    display: inline-block;
+    font-size: 17px;
+    margin-left: 15px;
+    color: #ff004f; /* Golden color for stars */
+    opacity: 1; /* Initially, stars are hidden */
+    transition: opacity 0.3s; /* Smooth transition */
+  }
+  
+  /* Style for unfilled stars */
+  .skill-rating::before {
+    content: '★';
+  }
+  
+  /* Style for filled stars */
+  .skill-rating[data-rating="1"]::before { content: '★☆☆☆☆'; }
+  .skill-rating[data-rating="2"]::before { content: '★★☆☆☆'; }
+  .skill-rating[data-rating="3"]::before { content: '★★★☆☆'; }
+  .skill-rating[data-rating="4"]::before { content: '★★★★☆'; }
+  .skill-rating[data-rating="5"]::before { content: '★★★★★'; }
+  
+  
 .tab-titles{
     display: flex;
     margin: 20px 0 40px;
@@ -389,6 +418,7 @@ nav .fa-solid{
     nav .fa-solid{
         display: block;
         font-size: 25px;
+        margin-right: 26px;
     }
 
     nav ul{
