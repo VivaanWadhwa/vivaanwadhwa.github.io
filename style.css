@@ -29,6 +29,7 @@ nav{
     flex-wrap: wrap;
     position: fixed;
     background-color: #080808;
+    opacity: 75%;
     width: 100%;
     z-index: 9999; /* set a high z-index value */
 }
