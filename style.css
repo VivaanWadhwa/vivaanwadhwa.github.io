@@ -13,7 +13,7 @@ body{
 }
 #header{
     width: 100%;
-    height: 100vh;
+    height: 51vh;
     background-image: url(images/background.png);
     background-size: cover;
     background-position: center;
@@ -21,6 +21,11 @@ body{
 #container{
     padding: 10px 0%;
     margin-top: -20px;
+}
+#header img{
+    width: 250px;
+    margin-top: 20px;
+    margin-left: 20px;
 }
 nav{
     display: flex;
@@ -53,7 +58,7 @@ nav ul li a::after{
     content: '';
     width: 0;
     height: 3px;
-    background: #ff004f;
+    background: #0000ff;
     position: absolute;
     left: 0;
     bottom: -6px;
@@ -64,17 +69,28 @@ nav ul li a:hover::after{
 }
 .header-text{
     color: #fff;
-    margin-top: 20%;
+    margin-top: 12%;
     font-size: 30px;
     font-weight: bold;
 }
 .header-text h1{
     font-size: 60px;
     margin-top: 20px;
-    margin-left: 10%;
+    margin-left: 5%;
+    margin-bottom: 0;
 }
 .header-text h1 span{
-    color: #ff004f;
+    color: #fff;
+    font-style: italic;
+}
+
+.header-text h3{
+    font-size: 30px;
+    margin-left: 5%;
+}
+
+.header-text h3 span{
+    color: #fff;
     font-style: italic;
 }
 
@@ -102,7 +118,7 @@ nav ul li a:hover::after{
 }
 
 .sub-title{
-    font-size: 60px;
+    font-size: 40px;
     font-weight: 600;
     color: #fff;
 }
@@ -112,7 +128,7 @@ nav ul li a:hover::after{
     display: inline-block;
     font-size: 17px;
     margin-left: 15px;
-    color: #ff004f; /* Golden color for stars */
+    color: #26457a; /* Golden color for stars */
     opacity: 1; /* Initially, stars are hidden */
     transition: opacity 0.3s; /* Smooth transition */
   }
@@ -147,7 +163,7 @@ nav ul li a:hover::after{
     content: '';
     width: 0;
     height: 3px;
-    background: #ff004f;
+    background: #26457a;
     position: absolute;
     left: 0;
     bottom: -8px;
@@ -158,6 +174,11 @@ nav ul li a:hover::after{
     width: 50%;
 } */
 
+.row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
 .tab-links.active-link::after{
     width: 50%;
 }
@@ -165,6 +186,7 @@ nav ul li a:hover::after{
 .tab-contents ul li{
     list-style: none;
     margin: 10px 0;
+    font-size: 22px;
 }
 
 .tab-contents ul li a{
@@ -176,16 +198,30 @@ nav ul li a:hover::after{
 .tab-contents ul li span{
     display: inline-block;
     font-weight: bold;
-    color: #ff004f;
+    color: #0000ff;
 }
 
-.tab-contents{
+.skills {
+    display: grid;
+    grid-template-columns: 14% 14% 14% 14% 14% 14%;
+}
+
+.skills div {
+    margin: 10px;
+    align-items: center;
+}
+
+.skills div i {
+    font-size: 40px;
+}
+
+/* .tab-contents{
     display: none;
 }
 
 .tab-contents.active-tab{
     display: block;
-}
+} */
 
 /* ------------------Services________________ */
 
@@ -228,7 +264,7 @@ nav ul li a:hover::after{
 }
 
 .services-list div:hover{
-    background: #ff004f;
+    background: #26457a;
     transform: translateY(-10px);
 }
 
@@ -281,7 +317,7 @@ nav ul li a:hover::after{
 
 .layer a{
     margin-top: 20px;
-    color: #ff004f;
+    color: #26457a;
     text-decoration: none;
     font-size: 18px;
     line-height: 60px;
@@ -311,7 +347,7 @@ nav ul li a:hover::after{
 }
 
 .contact-left p i{
-    color: #ff004f;
+    color: #0000ff;
     margin-right: 15px;
     font-size: 25px;
 }
@@ -324,7 +360,7 @@ nav ul li a:hover::after{
     text-decoration: none;
     font-size: 30px;
     margin-right: 15px;
-    color: #ff004f;
+    color: #0000ff;
     display: inline-block;
     transition: transform 0.5s;
 }
@@ -349,7 +385,7 @@ nav ul li a:hover::after{
 }
 
 .btn:hover {
-    background-color: #e60046;
+    background-color: #3a598e;
 }
 
 .btn.btn2{
@@ -394,7 +430,7 @@ form btn2{
 }
 
 .copyright i{
-    color: #ff004f;
+    color: #0000ff;
 }
 
 /* ------------------Media Queries________________ */
@@ -423,7 +459,7 @@ nav .fa-solid{
     }
 
     nav ul{
-        background: #ff004f;
+        background: #0000ff;
         position: fixed;
         top: 0;
         right: -200px;

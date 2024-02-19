@@ -14,8 +14,7 @@
             <nav>
                 <img src="images/logo-2.png" class="logo">
                 <ul id="sidemenu">
-                    <li><a href="#header">Home</a></li>
-                    <li><a href="#about">About</a></li>
+                    <li><a href="#about">Skills</a></li>
                     <li><a href="#services">Projects</a></li>
                     <!-- <li><a href="#">Portfolio</a></li> -->
                     <li><a href="#contact">Contact</a></li>
@@ -23,12 +22,8 @@
                 </ul>
                 <i class="fa-solid fa-bars" onclick="openmenu()"></i>
             </nav>
-            <div class="header-text">
-                <p style = "
-                    margin-left: 10%;
-                ">Software Developer & Data Analyst</p>
-                <h1>Hi, I'm <span> Vivaan Wadhwa </span></h1>
-            </div>
+            <div class = "header-text"> <h1><span>Vivaan Wadhwa</span></h1><br>
+                                        <h3><span>Software Developer & Data Analyst</span></h3></div>
         </div>
     </div>
     <!-- ------------------------About--------------- -->
@@ -36,49 +31,30 @@
         <div class="container">
             <div class="row">
                 <div class="about-col-1">
-                    <img src="images/user.png">
+                    <h3 class = "sub-title">Skills</h3>
+                    <div class="tab-contents active-tab" id = "skills">
+                        <div class = "skills">
+                            <div><a href = "https://www.python.org"><img src = "images/python.svg"></a></div>
+                            <div><a href = "https://www.java.com/en/"><img src = "images/java.svg"></a></div>
+                            <div><a href = "https://developer.mozilla.org/en-US/docs/Web/JavaScript"><img src = "images/javascript.svg"></a></div>
+                            <div><a href ="https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/"><img src = "images/c-sharp-c.svg"></a></div>
+                            <div><a href = "https://cplusplus.com"><img src = "images/c-plusplus.svg"></a></div>
+                            <div><a href = "https://en.wikipedia.org/wiki/HTML"><img src = "images/html-5.svg"></a></div>
+                            <div><a href = "https://en.wikipedia.org/wiki/CSS"><img src = "images/css-3.svg"></a></div>
+                            <div><a href = "https://www.r-project.org"><img src = "images/r-letter.svg"></a></div>
+                            <div><a href = "https://www.tensorflow.org"><img src = "images/tensorflow.svg"></a></div>
+                            <div><a href = "https://en.wikipedia.org/wiki/SQL"><img src = "images/sql.svg"></a></div>
+                            <div><a href = "https://www.mongodb.com"><img src = "images/mongodb-plain-wordmark.svg"></a></div>
+                            <div><a href = "https://www.tableau.com"><img src = "images/tableau.svg"></a></div>
+                        </div>
+                    </div>
                 </div>
                 <div class="about-col-2">
-                    <h1 class = "sub-title">About Me</h1>
-                    <p>Hey there! I'm Vivaan Wadhwa, a passionate third-year student at the University of British Columbia, pursuing a combined major in 
-                        Computer Science and Statistics. I am interested in projects involving Data Analytics and Software Development. Check out my projects below! <br> <br>
-                    <h3>Beyond the Code</h3> <br>
-                                Aside from development and analytics, I am interested in sports like Volleyball and Badminton. I also like watching anime in my spare time.
-                                <br>
-                        <h3>Let's Connect 🚀</h3>
-                        <br>If you're as passionate about data analytics and software development as I am, don't hesitate to reach out. I'm always eager to collaborate and work on projects that make a difference. Together, we can leverage data and code to shape a better tomorrow.</p>
-                    <div class="tab-titles">
-                        <p class="tab-links active-link" onclick="opentab('skills')">Skills</p>
-                        <p class="tab-links" onclick="opentab('experience')">Experience</p>
-                        <p class="tab-links" onclick="opentab('education')">Education</p>
-                    </div>
-                    <div class="tab-contents active-tab" id = "skills">
-                        <ul>
-                            <li>
-                                <span>Software Development</span>
-                                <!-- <br>Designing Applications using Python,Java and C++ -->
-                                <div class="skill-rating" data-rating="4"></div>
-                            </li>
-                            <li>
-                                <span>Data Analysis</span>
-                                <!-- <br>Performing Complex Data operations on large Datasets using Python and R</li> -->
-                                <div class="skill-rating" data-rating="5"></div>
-                            <li>
-                                <span>Web Development</span>
-                                <!-- <br>Designing Web Interfaces</li> -->
-                                <div class="skill-rating" data-rating="3"></div>
-                        </ul>
-                    </div>
+                    <h3 class = "sub-title">Work Experience</h3>
                     <div class="tab-contents" id = "experience">
                         <ul>
-                            <li><span>Jan. 2022 - Apr. 2022</span><br>Software Developer Intern at <a href="http://infiniai.tech">InfiniAI</a></li>
+                            <li><span>Jan. 2022 - Apr. 2022</span><br>Software Developer Volunteer at <a href="http://infiniai.tech">InfiniAI</a></li>
                             <li><span>Oct. 2022 - Sep. 2023</span><br>Catering Associate at Nest Catering and Conference Services</li>
-                        </ul>
-                    </div>
-                    <div class="tab-contents" id  = "education">
-                        <ul>
-                            <li><span>2021-2025</span><br>Bachelors of Science in Computer Science & Statistics at University of British Columbia</li>
-                            <li><span>2021</span><br>All India Senior School Certificate Examination at Amity International School </li>
                         </ul>
                     </div>
                 </div>
@@ -90,42 +66,50 @@
         <div class="container">
             <h1 class = "sub-title">My Projects</h1>
             <div class="services-list">
-                <div>
+                <div><a href = "https://github.com/VivaanWadhwa/Airbnb-Price-Predictor">
                     <i class="fa-brands fa-python"></i>
-                    <h2>Real Estate Price Analysis</h2>
-                    <p>This is an innovative project leveraging Python and powerful libraries like scikit-learn and pandas to create a machine learning model based on Linear Regression. </p>
-                    <a href="https://github.com/kashish1928/Real_estate_analysis">See More</a>
-                </div>
-                <div>
+                    <h2>Airbnb Price Predictor</h2>
+                    <p>Utilizing a Kaggle dataset with over 20,000 observations, we conducted thorough EDA including scatterplot visualizations to analyze predictor-target relationships. 
+                        We employed various models, ultimately selecting LightGBM as the final prediction model 
+                        after evaluating various methods.</p>
+                    <!-- <a href="https://github.com/VivaanWadhwa/Airbnb-Price-Predictor">See More</a> -->
+                </a></div>
+                <div><a href = "https://github.com/kashish1928/Plant_Disease_Detector">
+                    <i class="fa-brands fa-python"></i>
+                    <h2>Plant Whisperer</h2>
+                    <p>Within 24 hours for the nwHacks 2024 Hackathon, we created a Python-based Web Application 
+                        using Taipy, integrating both the Plant ID API for plant photo identification and the OpenAI 
+                        API for additional plant information requests. Additionally, a MongoDB server was set up for 
+                        comprehensive plant data storage and retrieval.</p>
+                    <!-- <a href="https://github.com/VivaanWadhwa/Airbnb-Price-Predictor">See More</a> -->
+                </a></div>
+                <div><a href = "https://github.com/VivaanWadhwa/Face_Recognition_py">
                     <i class="fa-brands fa-python"></i>
                     <h2>Face Recognition Model</h2>
                     <p>This is a Face Recognition Model developed using libraries like OpenCV and dlib.</p>
-                    <a href="https://github.com/VivaanWadhwa/Face_Recognition_py">See More</a>
-                </div>
-                <div>
+                </a></div>
+                <div><a href = "https://github.com/VivaanWadhwa/Heart_Disease_Prediction">
                     <i class="fa-solid fa-r"></i>
                     <h2>CardioCare</h2>
                     <p>This is a project developed in R, utilizing the power of tidyverse and tidy models. This K-Nearest Neighbors (KNN) model offers valuable insights and early prediction of heart disease risk, potentially aiding in life-saving interventions and prevention strategies </p>
-                    <a href="https://github.com/VivaanWadhwa/Heart_Disease_Prediction/tree/main">See More</a>
-                </div>
-                <div>
+                </a></div>
+                <div><a href = "https://github.com/VivaanWadhwa/Card-Game">
                     <i class="fa-brands fa-java"></i>
                     <h2>Turn Based Card Game</h2>
                     <p>This is turn-based strategy card game made using the Java swing library. This was a part of my academic coursework for the course CPSC 210.</p>
-                    <a href="https://github.com/VivaanWadhwa/Card-Game">See More</a>
-                </div>
+                </a></div>
                 <div>
                     <i class="fa-brands fa-python"></i>
-                    <h2>MP3 Player</h2>
+                    <h2>MP3</h2>
+                    <h2>Player</h2>
                     <p>This is a MP3 Player made using Python utilising many libraries like YoutubeDL and mySQL.connector. </p>
                     <a href="https://github.com/VivaanWadhwa/MP3-Downloader-and-Player">See More</a>
                 </div>
-                <div>
-                    <i class="fa-solid fa-wallet"></i>
-                    <h2>Budget Manager</h2>
-                    <p>This is an under development mobile application. Aimed at college students for Budget management and savings.</p>
-                    <a href="https://github.com/VivaanWadhwa/Budget_Manager">See More</a>
-                </div>
+                <div><a href = "https://github.com/VivaanWadhwa/STAT201_GROUP18">
+                    <i class="fa-brands fa-r"></i>
+                    <h2>Wine Type Analysis</h2>
+                    <p>Statistical analyses, including hypothesis testing and confidence interval estimation, were conducted on wine data from the UCI Machine Learning Repository using R, employing techniques like asymptotic and simulation-based methods. </p>
+                </a></div>
             </div>
         </div>
     </div>
@@ -201,7 +185,6 @@
     <div class="copyright">
         <p>
             Made with <i class="fa-solid fa-heart"></i> by Vivaan Wadhwa <br>
-            Adapted from <a href="https://www.youtube.com/watch?v=0YFrGy_mzjY&t=1507s">GreatStack</a>
         </p>
     </div>
     <script>
