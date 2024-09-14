@@ -1,0 +1,34 @@
+/* styles/Layout.module.css */
+.background {
+  position: relative;
+  overflow: hidden;
+  min-height: 100vh;
+  background-color: black; /* Background of the night sky */
+}
+
+.starsContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none; /* Ensure it doesn't interfere with other elements */
+}
+
+.star {
+  position: absolute;
+  border-radius: 50%;
+  background: white;
+  opacity: 0.8;
+  animation: twinkle 1.5s infinite alternate;
+}
+
+@keyframes twinkle {
+  from {
+    opacity: 0.8;
+  }
+  to {
+    opacity: 1;
+  }
+}
