@@ -24,8 +24,7 @@ export default function Home() {
         <div className={styles.buttons}>
         <button className={styles.button}>
           <a
-            href="
-              "
+            href="mailto:wadhwa.vivaan@outlook.com"
             rel="noopener noreferrer"
           >
             Contact Me
@@ -33,7 +32,7 @@ export default function Home() {
         </button>
         <button className={styles.button}>
           <a
-            href=""
+            href="https://docs.google.com/document/d/1_DbUIvTxeV5M0zyUaWcx3xpH45KqBjeqZry3_2pFU9M/edit?usp=sharing"
             rel="noopener noreferrer"
           >
             Resume
@@ -44,7 +43,7 @@ export default function Home() {
       </main>
 
       <footer className={styles.footer}>
-        <a href="#" rel="noopener noreferrer">
+        <a href="https://linkedin.com/in/vivaanwadhwa" rel="noopener noreferrer">
           Created by Vivaan Wadhwa{' '}
           <img src="/star.svg" alt="Star" className={styles.logo} />
         </a>
