@@ -1,0 +1,133 @@
+/* styles/Home.module.css */
+.container {
+  min-height: 100vh;
+  padding: 0 1rem; /* Increase padding for mobile */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.title {
+  margin: 0 0 1rem;
+  line-height: 1.15;
+  font-size: 2.5rem; /* Adjust font size for mobile */
+  font-family: fantasy;
+  color: white;
+  text-align: center;
+}
+
+.description {
+  line-height: 1.5;
+  font-size: 1.25rem; /* Adjust font size for mobile */
+  font-family: monospace;
+  color: white;
+  text-align: center; /* Ensure center alignment */
+}
+
+.grid {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  max-width: 100%; /* Ensure grid takes full width */
+  margin-top: 2rem; /* Adjust margin for mobile */
+}
+
+.card {
+  margin: 0.5rem; /* Adjust margin for mobile */
+  flex-basis: 100%; /* Cards take full width on mobile */
+  max-width: 300px; /* Ensure cards don't get too wide */
+  padding: 1rem; /* Adjust padding for mobile */
+  text-align: center; /* Center text alignment */
+  color: inherit;
+  text-decoration: none;
+  border: 1px solid #eaeaea;
+  border-radius: 10px;
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.card:hover,
+.card:focus,
+.card:active {
+  color: #0070f3;
+  border-color: #0070f3;
+}
+
+.card h3 {
+  margin: 0 0 0.5rem; /* Adjust margin for mobile */
+  font-size: 1.25rem; /* Adjust font size for mobile */
+}
+
+.card p {
+  margin: 0;
+  font-size: 1rem; /* Adjust font size for mobile */
+  line-height: 1.5;
+}
+
+.logo {
+  height: 1em;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+  flex-direction: row; /* Default to horizontal layout */
+}
+
+.button {
+  background-color: rgb(255, 255, 255); /* White background */
+  color: black; /* Black text */
+  border: none; /* Remove default border */
+  padding: 0.75rem 1.5rem; /* Add padding */
+  margin: 0 0.5rem; /* Add space between buttons */
+  border-radius: 0.5rem; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+  font-family: monospace;
+  text-align: center; /* Center text alignment */
+}
+
+.button a {
+  color: inherit; /* Inherit color from the button */
+  text-decoration: none; /* Remove underline from links */
+}
+
+.button:hover {
+  background-color: #333; /* Slightly darker background on hover */
+}
+
+.footer {
+  color: inherit;
+  text-decoration: none;
+  font-family: monospace;
+  color: white;
+  text-align: center; /* Center align footer text */
+  padding: 1rem 0; /* Add padding for mobile */
+}
+
+@media (max-width: 600px) {
+  .title {
+    font-size: 2rem; /* Adjust font size for mobile */
+  }
+
+  .description {
+    font-size: 1rem; /* Adjust font size for mobile */
+  }
+
+  .card {
+    flex-basis: 100%; /* Ensure cards stack vertically on mobile */
+    max-width: 100%; /* Ensure cards take full width on mobile */
+  }
+
+  .buttons {
+    flex-direction: column; /* Stack buttons vertically on mobile */
+  }
+
+  .button {
+    padding: 0.5rem 1rem; /* Adjust padding for mobile */
+    margin: 0.5rem 0; /* Add space between buttons */
+  }
+}
