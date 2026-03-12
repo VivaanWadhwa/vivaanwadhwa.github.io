@@ -17,6 +17,7 @@
 
 # misc
 .DS_Store
+*.docx
 
 # debug
 npm-debug.log*
@@ -28,5 +29,7 @@ yarn-error.log*
 .env.development.local
 .env.test.local
 .env.production.local
-node_modules
-node_modules
+
+# lock files for other package managers
+pnpm-lock.yaml
+yarn.lock
