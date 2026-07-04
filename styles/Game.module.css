@@ -1,13 +1,54 @@
 .screen {
+  position: relative;
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #0a0f1e;
+  overflow: hidden;
+  background-color: #16302a;
+  background-image:
+    linear-gradient(rgba(6, 10, 20, 0.6), rgba(6, 10, 20, 0.6)),
+    url('/sprites/tile_grass.png');
+  background-size: cover, 64px 64px;
+  background-repeat: no-repeat, repeat;
   font-family: 'Courier New', Courier, monospace;
 }
 
+/* Purely cosmetic scenery filling the letterbox area outside the playable
+   map, so the town reads as continuing past the frame's edge. */
+.bgDecor {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.bgTree {
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  background-image: url('/sprites/tile_tree.png');
+  background-size: 64px 64px;
+  image-rendering: pixelated;
+  opacity: 0.75;
+  transform: translate(-50%, -50%);
+}
+
+.bgHouse {
+  position: absolute;
+  width: 160px;
+  height: 176px;
+  background-image: url('/sprites/house.png');
+  background-size: 160px 176px;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+  opacity: 0.8;
+  transform: translate(-50%, -50%);
+}
+
 .gameFrame {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -270,7 +311,7 @@
   background-size: 110px 198px;
   background-repeat: no-repeat;
   image-rendering: pixelated;
-  animation: celebrate 0.6s ease-in-out infinite;
+  animation: celebrate 0.6s ease-in-out 4;
 }
 
 @keyframes celebrate {

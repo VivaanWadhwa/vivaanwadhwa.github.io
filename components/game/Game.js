@@ -28,6 +28,19 @@ const STEP = {
 
 const npcAt = (row, col) => NPCS.find((n) => n.row === row && n.col === col);
 
+// Decorative scenery scattered in the letterbox area around the playable
+// map so it reads as "the town keeps going" rather than a void. Purely
+// cosmetic - positions are percentages of the viewport, non-interactive.
+const BG_TREES = [
+  ['4%', '8%'], ['12%', '22%'], ['3%', '55%'], ['9%', '80%'],
+  ['92%', '10%'], ['85%', '30%'], ['94%', '62%'], ['88%', '85%'],
+  ['50%', '4%'], ['60%', '92%'], ['22%', '90%'], ['75%', '6%'],
+];
+const BG_HOUSES = [
+  ['82%', '55%'],
+  ['8%', '38%'],
+];
+
 export default function Game() {
   const [player, setPlayer] = useState(PLAYER_START);
   const [walkFrame, setWalkFrame] = useState(0);
@@ -128,6 +141,15 @@ export default function Game() {
 
   return (
     <div className={styles.screen}>
+      <div className={styles.bgDecor}>
+        {BG_TREES.map(([left, top], i) => (
+          <div key={i} className={styles.bgTree} style={{ left, top }} />
+        ))}
+        {BG_HOUSES.map(([left, top], i) => (
+          <div key={i} className={styles.bgHouse} style={{ left, top }} />
+        ))}
+      </div>
+
       <SkipLink />
 
       <div className={styles.gameFrame}>
