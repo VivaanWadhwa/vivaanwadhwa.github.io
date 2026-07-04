@@ -1,0 +1,393 @@
+.screen {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  background-color: #16302a;
+  background-image:
+    linear-gradient(rgba(6, 10, 20, 0.6), rgba(6, 10, 20, 0.6)),
+    url('/sprites/tile_grass.png');
+  background-size: cover, 64px 64px;
+  background-repeat: no-repeat, repeat;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.gameFrame {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.world {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  image-rendering: pixelated;
+}
+
+.mapLayer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: transform 0.14s linear;
+}
+
+.mapGrid {
+  display: grid;
+}
+
+.tile {
+  width: 64px;
+  height: 64px;
+  background-size: 64px 64px;
+  image-rendering: pixelated;
+}
+
+.tileGrass { background-image: url('/sprites/tile_grass.png'); }
+.tilePath { background-image: url('/sprites/tile_path.png'); }
+.tileFlowers { background-image: url('/sprites/tile_flowers.png'); }
+.tileTree { background-image: url('/sprites/tile_tree.png'); }
+.tileTallgrass { background-image: url('/sprites/tile_tallgrass.png'); }
+.tileSign { background-image: url('/sprites/tile_sign.png'); }
+.tileFence { background-image: url('/sprites/tile_fence.png'); }
+.tileHouse { background-image: url('/sprites/tile_grass.png'); }
+.tileBush { background-image: url('/sprites/tile_bush.png'); }
+.tileRock { background-image: url('/sprites/tile_rock.png'); }
+.tileWater { background-image: url('/sprites/tile_water.svg'); }
+
+.house {
+  position: absolute;
+  image-rendering: pixelated;
+  pointer-events: none;
+}
+
+.houseRoof {
+  z-index: 40;
+  clip-path: inset(0 0 96px 0);
+}
+
+.houseFront {
+  z-index: 5;
+  clip-path: inset(256px 0 0 0);
+}
+
+.sprite {
+  position: absolute;
+  width: 64px;
+  height: 128px;
+  background-size: 192px 512px;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+  transition: left 0.14s linear, top 0.14s linear;
+}
+
+.npc {
+  cursor: pointer;
+}
+
+/* Brief blade-burst at the player's feet on each tall-grass step. Restarted
+   by re-keying the element; ends transparent so the player stays visible. */
+.rustle {
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  background-image: url('/sprites/rustle.png');
+  background-size: 64px 64px;
+  image-rendering: pixelated;
+  pointer-events: none;
+  animation: rustle 0.45s ease-out forwards;
+}
+
+@keyframes rustle {
+  0% { transform: scale(0.7); opacity: 1; }
+  55% { transform: scale(1.15); opacity: 0.9; }
+  100% { transform: scale(1.3); opacity: 0; }
+}
+
+/* --- dialogue --- */
+
+.dialogueBox {
+  position: absolute;
+  left: 24px;
+  right: 24px;
+  bottom: 24px;
+  z-index: 50;
+  background: #f8f8f0;
+  border: 8px solid #303048;
+  border-radius: 16px;
+  box-shadow: inset 0 0 0 4px #a0a0c0;
+  padding: 24px 32px 16px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.dialogueName {
+  font-weight: bold;
+  font-size: 26px;
+  letter-spacing: 2px;
+  color: #c33;
+  margin-bottom: 8px;
+}
+
+.dialogueText {
+  margin: 0;
+  font-size: 30px;
+  line-height: 1.35;
+  color: #202030;
+}
+
+.dialogueHint {
+  text-align: right;
+  font-size: 24px;
+  color: #808098;
+  animation: bob 0.8s ease-in-out infinite alternate;
+}
+
+@keyframes bob {
+  from { transform: translateY(0); }
+  to { transform: translateY(6px); }
+}
+
+/* --- encounter --- */
+
+.encounter {
+  position: absolute;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(#cfe8cf 0%, #e8f4e0 55%, #b8d8a8 55%, #98c088 100%);
+}
+
+.encounterArena {
+  position: relative;
+  flex: 1;
+}
+
+.wildSprite {
+  position: absolute;
+  right: 130px;
+  bottom: 110px;
+  width: 170px;
+  height: 305px;
+  background-image: url('/sprites/vivaan_battle.png');
+  background-size: 170px 305px;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+  animation: appear 0.5s ease-out;
+}
+
+@keyframes appear {
+  from { transform: translateX(140px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+.wildCaptured {
+  animation: capture 0.35s ease-in 0.55s forwards;
+}
+
+@keyframes capture {
+  to { transform: scale(0); opacity: 0.2; }
+}
+
+.pokeball {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background:
+    linear-gradient(
+      #e03028 0%, #e03028 42%,
+      #202020 42%, #202020 58%,
+      #f0f0f0 58%, #f0f0f0 100%
+    );
+  box-shadow: inset -4px -4px 0 rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+.pokeball::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 12px;
+  height: 12px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: #f0f0f0;
+  border: 3px solid #202020;
+}
+
+.pokeball {
+  position: absolute;
+  right: 146px;
+  bottom: 120px;
+  animation:
+    throwArc 0.55s ease-out forwards,
+    wiggle 0.45s ease-in-out 1.1s 3;
+}
+
+@keyframes throwArc {
+  0% { transform: translate(-420px, 60px) rotate(0deg); }
+  50% { transform: translate(-210px, -140px) rotate(360deg); }
+  100% { transform: translate(0, 60px) rotate(720deg); }
+}
+
+@keyframes wiggle {
+  0%, 100% { transform: translate(0, 60px) rotate(0deg); }
+  25% { transform: translate(-6px, 60px) rotate(-22deg); }
+  75% { transform: translate(6px, 60px) rotate(22deg); }
+}
+
+.encounterTextbox {
+  min-height: 108px;
+  background: #f8f8f0;
+  border-top: 4px solid #303048;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  font-size: 17px;
+  color: #202030;
+}
+
+.encounterTextbox p {
+  margin: 0;
+}
+
+.encounterButton {
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  padding: 10px 18px;
+  background: #303048;
+  color: #f8f8f0;
+  border: 3px solid #202030;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.encounterButton:hover {
+  background: #64ffda;
+  color: #202030;
+}
+
+.caughtPanel {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  animation: appear 0.4s ease-out;
+}
+
+.caughtSprite {
+  width: 110px;
+  height: 198px;
+  background-image: url('/sprites/vivaan_battle.png');
+  background-size: 110px 198px;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+  animation: celebrate 0.6s ease-in-out 4;
+}
+
+@keyframes celebrate {
+  0%, 100% { transform: translateY(0) scaleX(1); }
+  30% { transform: translateY(-16px) scaleX(1); }
+  50% { transform: translateY(-16px) scaleX(-1); }
+  80% { transform: translateY(0) scaleX(-1); }
+}
+
+.caughtTitle {
+  margin: 8px 0 0;
+  font-size: 24px;
+  letter-spacing: 1px;
+  color: #202030;
+}
+
+.caughtSub {
+  margin: 0;
+  font-size: 15px;
+  color: #404058;
+}
+
+.caughtLinks {
+  display: flex;
+  gap: 14px;
+  margin-top: 10px;
+}
+
+.caughtLink {
+  font-size: 14px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  padding: 9px 16px;
+  border: 2px solid #303048;
+  border-radius: 6px;
+  color: #202030;
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.caughtLink:hover {
+  background: #303048;
+  color: #f8f8f0;
+}
+
+/* --- chrome --- */
+
+.skipLink {
+  position: fixed;
+  top: 12px;
+  right: 14px;
+  z-index: 100;
+  font-size: 11px;
+  letter-spacing: 0.3px;
+  color: #64ffda;
+  border: 1px solid #64ffda;
+  border-radius: 4px;
+  padding: 5px 9px;
+  text-decoration: none;
+  background: rgba(10, 15, 30, 0.8);
+}
+
+.skipLink:hover {
+  background: rgba(100, 255, 218, 0.15);
+}
+
+.controlsHint {
+  position: absolute;
+  left: 50%;
+  bottom: 24px;
+  z-index: 40;
+  transform: translateX(-50%);
+  margin: 0;
+  padding: 4px 10px;
+  font-size: 13px;
+  color: #ccd6f6;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  background: rgba(10, 15, 30, 0.5);
+  border-radius: 999px;
+  pointer-events: none;
+}
+
+.attribution {
+  position: absolute;
+  left: 50%;
+  bottom: 6px;
+  z-index: 40;
+  transform: translateX(-50%);
+  margin: 0;
+  font-size: 11px;
+  color: #4a5578;
+  white-space: nowrap;
+}
+
+.attribution a {
+  color: #64ffda;
+  text-decoration: none;
+}
