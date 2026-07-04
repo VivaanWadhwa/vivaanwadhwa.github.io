@@ -25,13 +25,13 @@
 
 .mapGrid {
   display: grid;
-  grid-template-columns: repeat(16, 48px);
+  grid-template-columns: repeat(16, 64px);
 }
 
 .tile {
-  width: 48px;
-  height: 48px;
-  background-size: 48px 48px;
+  width: 64px;
+  height: 64px;
+  background-size: 64px 64px;
   image-rendering: pixelated;
 }
 
@@ -52,9 +52,9 @@
 
 .sprite {
   position: absolute;
-  width: 48px;
-  height: 96px;
-  background-size: 144px 384px;
+  width: 64px;
+  height: 128px;
+  background-size: 192px 512px;
   background-repeat: no-repeat;
   image-rendering: pixelated;
   transition: left 0.14s linear, top 0.14s linear;
@@ -64,14 +64,23 @@
   cursor: pointer;
 }
 
-.grassOverlay {
+/* Brief blade-burst at the player's feet on each tall-grass step. Restarted
+   by re-keying the element; ends transparent so the player stays visible. */
+.rustle {
   position: absolute;
-  width: 48px;
-  height: 48px;
-  background-image: url('/sprites/tile_tallgrass.png');
-  background-size: 48px 48px;
+  width: 64px;
+  height: 64px;
+  background-image: url('/sprites/rustle.png');
+  background-size: 64px 64px;
   image-rendering: pixelated;
   pointer-events: none;
+  animation: rustle 0.45s ease-out forwards;
+}
+
+@keyframes rustle {
+  0% { transform: scale(0.7); opacity: 1; }
+  55% { transform: scale(1.15); opacity: 0.9; }
+  100% { transform: scale(1.3); opacity: 0; }
 }
 
 /* --- dialogue --- */

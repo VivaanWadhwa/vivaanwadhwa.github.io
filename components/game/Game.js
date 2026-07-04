@@ -7,7 +7,7 @@ import {
   TILE_SIZE,
   BLOCKED_TILES,
   PLAYER_START,
-  ENCOUNTER_CHANCE,
+  rollEncounterThreshold,
   NPCS,
   SIGNS,
 } from './mapData';
@@ -34,8 +34,11 @@ export default function Game() {
   const [moving, setMoving] = useState(false);
   const [dialogue, setDialogue] = useState(null); // { name, pages, page }
   const [encounter, setEncounter] = useState(null); // null | appeared | throwing | caught
+  const [grassStep, setGrassStep] = useState(0); // keys the rustle animation restart
   const idleTimer = useRef(null);
   const throwTimer = useRef(null);
+  const grassSteps = useRef(0);
+  const encounterAt = useRef(rollEncounterThreshold());
 
   const openDialogue = (source) =>
     setDialogue({ name: source.name, pages: source.dialogue, page: 0 });
@@ -86,8 +89,14 @@ export default function Game() {
       clearTimeout(idleTimer.current);
       idleTimer.current = setTimeout(() => setMoving(false), 180);
 
-      if (tile === 'W' && Math.random() < ENCOUNTER_CHANCE) {
-        setEncounter('appeared');
+      if (tile === 'W') {
+        setGrassStep((s) => s + 1);
+        grassSteps.current += 1;
+        if (grassSteps.current >= encounterAt.current) {
+          grassSteps.current = 0;
+          encounterAt.current = rollEncounterThreshold();
+          setEncounter('appeared');
+        }
       }
     },
     [dialogue, encounter, player]
@@ -139,7 +148,8 @@ export default function Game() {
           />
           {inTallGrass && (
             <div
-              className={styles.grassOverlay}
+              key={grassStep}
+              className={styles.rustle}
               style={{
                 left: player.col * TILE_SIZE,
                 top: player.row * TILE_SIZE,

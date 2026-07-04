@@ -6,7 +6,7 @@
 //   S sign (blocked, readable)                     X fence (blocked)
 //   H house footprint (blocked, drawn by the house overlay image)
 
-export const TILE_SIZE = 48; // 16px art at 3x
+export const TILE_SIZE = 64; // 16px art at 4x
 
 export const MAP = [
   'TTTTTTTTTTTTTTTT',
@@ -29,15 +29,15 @@ export const BLOCKED_TILES = new Set(['T', 'S', 'X', 'H']);
 
 export const PLAYER_START = { row: 6, col: 7, facing: 'down' };
 
-// Chance of a wild encounter for each step onto a W tile.
-export const ENCOUNTER_CHANCE = 0.25;
+// A wild encounter triggers after a random number of tall-grass steps (1-4).
+export const rollEncounterThreshold = () => Math.floor(Math.random() * 4) + 1;
 
-// House overlay image: 80x88 art at 3x, bottom-aligned to the end of row 5.
+// House overlay image: 80x88 art at 4x, bottom-aligned to the end of row 5.
 export const HOUSE = {
   left: 10 * TILE_SIZE,
-  top: 6 * TILE_SIZE - 88 * 3,
-  width: 80 * 3,
-  height: 88 * 3,
+  top: 6 * TILE_SIZE - 88 * 4,
+  width: 80 * 4,
+  height: 88 * 4,
 };
 
 export const NPCS = [
