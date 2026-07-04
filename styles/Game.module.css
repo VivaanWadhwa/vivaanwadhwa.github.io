@@ -1,9 +1,6 @@
 .screen {
   position: relative;
   min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   overflow: hidden;
   background-color: #16302a;
   background-image:
@@ -14,59 +11,29 @@
   font-family: 'Courier New', Courier, monospace;
 }
 
-/* Purely cosmetic scenery filling the letterbox area outside the playable
-   map, so the town reads as continuing past the frame's edge. */
-.bgDecor {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-}
-
-.bgTree {
-  position: absolute;
-  width: 64px;
-  height: 64px;
-  background-image: url('/sprites/tile_tree.png');
-  background-size: 64px 64px;
-  image-rendering: pixelated;
-  opacity: 0.75;
-  transform: translate(-50%, -50%);
-}
-
-.bgHouse {
-  position: absolute;
-  width: 160px;
-  height: 176px;
-  background-image: url('/sprites/house.png');
-  background-size: 160px 176px;
-  background-repeat: no-repeat;
-  image-rendering: pixelated;
-  opacity: 0.8;
-  transform: translate(-50%, -50%);
-}
-
 .gameFrame {
   position: relative;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
 }
 
 .world {
-  position: relative;
+  position: absolute;
+  inset: 0;
   overflow: hidden;
-  border: 8px solid #2a3550;
-  border-radius: 6px;
-  box-shadow: 0 0 40px rgba(100, 255, 218, 0.15);
   image-rendering: pixelated;
+}
+
+.mapLayer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: transform 0.14s linear;
 }
 
 .mapGrid {
   display: grid;
-  grid-template-columns: repeat(16, 64px);
 }
 
 .tile {
@@ -84,10 +51,13 @@
 .tileSign { background-image: url('/sprites/tile_sign.png'); }
 .tileFence { background-image: url('/sprites/tile_fence.png'); }
 .tileHouse { background-image: url('/sprites/tile_grass.png'); }
+.tileBush { background-image: url('/sprites/tile_bush.png'); }
+.tileRock { background-image: url('/sprites/tile_rock.png'); }
+.tileWater { background-image: url('/sprites/tile_water.svg'); }
 
 .house {
   position: absolute;
-  z-index: 5;
+  z-index: 18;
   image-rendering: pixelated;
 }
 
@@ -128,44 +98,44 @@
 
 .dialogueBox {
   position: absolute;
-  left: 12px;
-  right: 12px;
-  bottom: 12px;
+  left: 24px;
+  right: 24px;
+  bottom: 24px;
   z-index: 50;
   background: #f8f8f0;
-  border: 4px solid #303048;
-  border-radius: 8px;
-  box-shadow: inset 0 0 0 2px #a0a0c0;
-  padding: 12px 16px 8px;
+  border: 8px solid #303048;
+  border-radius: 16px;
+  box-shadow: inset 0 0 0 4px #a0a0c0;
+  padding: 24px 32px 16px;
   cursor: pointer;
   user-select: none;
 }
 
 .dialogueName {
   font-weight: bold;
-  font-size: 13px;
-  letter-spacing: 1px;
+  font-size: 26px;
+  letter-spacing: 2px;
   color: #c33;
-  margin-bottom: 4px;
+  margin-bottom: 8px;
 }
 
 .dialogueText {
   margin: 0;
-  font-size: 15px;
-  line-height: 1.45;
+  font-size: 30px;
+  line-height: 1.35;
   color: #202030;
 }
 
 .dialogueHint {
   text-align: right;
-  font-size: 12px;
+  font-size: 24px;
   color: #808098;
   animation: bob 0.8s ease-in-out infinite alternate;
 }
 
 @keyframes bob {
   from { transform: translateY(0); }
-  to { transform: translateY(3px); }
+  to { transform: translateY(6px); }
 }
 
 /* --- encounter --- */
@@ -379,16 +349,32 @@
 }
 
 .controlsHint {
+  position: absolute;
+  left: 50%;
+  bottom: 24px;
+  z-index: 40;
+  transform: translateX(-50%);
   margin: 0;
+  padding: 4px 10px;
   font-size: 13px;
-  color: #8892b0;
+  color: #ccd6f6;
   letter-spacing: 0.5px;
+  white-space: nowrap;
+  background: rgba(10, 15, 30, 0.5);
+  border-radius: 999px;
+  pointer-events: none;
 }
 
 .attribution {
+  position: absolute;
+  left: 50%;
+  bottom: 6px;
+  z-index: 40;
+  transform: translateX(-50%);
   margin: 0;
   font-size: 11px;
   color: #4a5578;
+  white-space: nowrap;
 }
 
 .attribution a {

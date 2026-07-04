@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import styles from '../../styles/Game.module.css';
 import {
   MAP,
@@ -26,23 +26,60 @@ const STEP = {
   right: [0, 1],
 };
 
-const npcAt = (row, col) => NPCS.find((n) => n.row === row && n.col === col);
+const createNpcPositions = () =>
+  Object.fromEntries(
+    NPCS.map((npc) => [
+      npc.id,
+      {
+        row: npc.row,
+        col: npc.col,
+        direction: 1,
+        facing: npc.facing || 'down',
+        walkFrame: 0,
+        moving: false,
+      },
+    ])
+  );
 
-// Decorative scenery scattered in the letterbox area around the playable
-// map so it reads as "the town keeps going" rather than a void. Purely
-// cosmetic - positions are percentages of the viewport, non-interactive.
-const BG_TREES = [
-  ['4%', '8%'], ['12%', '22%'], ['3%', '55%'], ['9%', '80%'],
-  ['92%', '10%'], ['85%', '30%'], ['94%', '62%'], ['88%', '85%'],
-  ['50%', '4%'], ['60%', '92%'], ['22%', '90%'], ['75%', '6%'],
-];
-const BG_HOUSES = [
-  ['82%', '55%'],
-  ['8%', '38%'],
-];
+const getNpcPosition = (npc, npcPositions) =>
+  npcPositions[npc.id] || {
+    row: npc.row,
+    col: npc.col,
+    direction: 1,
+    facing: npc.facing || 'down',
+    walkFrame: 0,
+    moving: false,
+  };
+
+const npcAt = (row, col, npcPositions) =>
+  NPCS.find((npc) => {
+    const position = getNpcPosition(npc, npcPositions);
+    return position.row === row && position.col === col;
+  });
+
+const npcOccupies = (row, col, npcPositions, excludeId) =>
+  NPCS.some((npc) => {
+    if (npc.id === excludeId) return false;
+    const position = getNpcPosition(npc, npcPositions);
+    return position.row === row && position.col === col;
+  });
+
+const isBlockedTile = (row, col) =>
+  row < 0 ||
+  row >= ROWS ||
+  col < 0 ||
+  col >= COLS ||
+  BLOCKED_TILES.has(MAP[row][col]);
+
+const clampCameraOffset = (offset, viewportSize, mapSize) => {
+  if (viewportSize >= mapSize) return (viewportSize - mapSize) / 2;
+  return Math.min(0, Math.max(viewportSize - mapSize, offset));
+};
 
 export default function Game() {
   const [player, setPlayer] = useState(PLAYER_START);
+  const [npcPositions, setNpcPositions] = useState(createNpcPositions);
+  const [viewport, setViewport] = useState({ width: 0, height: 0 });
   const [walkFrame, setWalkFrame] = useState(0);
   const [moving, setMoving] = useState(false);
   const [dialogue, setDialogue] = useState(null); // { name, pages, page }
@@ -52,6 +89,93 @@ export default function Game() {
   const throwTimer = useRef(null);
   const grassSteps = useRef(0);
   const encounterAt = useRef(rollEncounterThreshold());
+  const playerRef = useRef(PLAYER_START);
+
+  useEffect(() => {
+    const updateViewport = () => {
+      setViewport({ width: window.innerWidth, height: window.innerHeight });
+    };
+
+    updateViewport();
+    window.addEventListener('resize', updateViewport);
+    return () => window.removeEventListener('resize', updateViewport);
+  }, []);
+
+  useEffect(() => {
+    playerRef.current = player;
+  }, [player]);
+
+  useEffect(() => {
+    if (dialogue || encounter) return undefined;
+
+    const patrollers = NPCS.filter((npc) => npc.patrol);
+    if (patrollers.length === 0) return undefined;
+
+    const intervalMs = Math.min(
+      ...patrollers.map((npc) => npc.patrol.intervalMs)
+    );
+    const timer = setInterval(() => {
+      setNpcPositions((positions) => {
+        let changed = false;
+        const nextPositions = { ...positions };
+
+        patrollers.forEach((npc) => {
+          const position = getNpcPosition(npc, nextPositions);
+          const direction = position.direction || 1;
+          const candidate = {
+            row: position.row,
+            col: position.col + direction,
+          };
+          let nextDirection = direction;
+          let target = candidate;
+
+          if (
+            candidate.col < npc.patrol.min ||
+            candidate.col > npc.patrol.max ||
+            isBlockedTile(candidate.row, candidate.col)
+          ) {
+            nextDirection = -direction;
+            target = {
+              row: position.row,
+              col: position.col + nextDirection,
+            };
+          }
+
+          const playerPosition = playerRef.current;
+          const occupied =
+            playerPosition.row === target.row &&
+            playerPosition.col === target.col;
+          const blocked =
+            isBlockedTile(target.row, target.col) ||
+            npcOccupies(target.row, target.col, nextPositions, npc.id);
+
+          if (!occupied && !blocked) {
+            nextPositions[npc.id] = {
+              row: target.row,
+              col: target.col,
+              direction: nextDirection,
+              facing: nextDirection > 0 ? 'right' : 'left',
+              walkFrame: position.walkFrame === 0 ? 1 : 0,
+              moving: true,
+            };
+            changed = true;
+          } else if (nextDirection !== direction) {
+            nextPositions[npc.id] = {
+              ...position,
+              direction: nextDirection,
+              facing: nextDirection > 0 ? 'right' : 'left',
+              moving: false,
+            };
+            changed = true;
+          }
+        });
+
+        return changed ? nextPositions : positions;
+      });
+    }, intervalMs);
+
+    return () => clearInterval(timer);
+  }, [dialogue, encounter]);
 
   const openDialogue = (source) =>
     setDialogue({ name: source.name, pages: source.dialogue, page: 0 });
@@ -81,7 +205,7 @@ export default function Game() {
         return;
       }
 
-      const bumpedNpc = npcAt(row, col);
+      const bumpedNpc = npcAt(row, col, npcPositions);
       if (bumpedNpc) {
         setPlayer({ ...player, facing: dir });
         openDialogue(bumpedNpc);
@@ -112,7 +236,7 @@ export default function Game() {
         }
       }
     },
-    [dialogue, encounter, player]
+    [dialogue, encounter, npcPositions, player]
   );
 
   const handleAction = useCallback(() => {
@@ -124,61 +248,80 @@ export default function Game() {
     const [dr, dc] = STEP[player.facing];
     const row = player.row + dr;
     const col = player.col + dc;
-    const target = npcAt(row, col) || SIGNS[`${row},${col}`];
+    const target = npcAt(row, col, npcPositions) || SIGNS[`${row},${col}`];
     if (target) openDialogue(target);
-  }, [encounter, dialogue, player, advanceDialogue, startThrow]);
+  }, [encounter, dialogue, npcPositions, player, advanceDialogue, startThrow]);
 
   useKeyboardMovement({ onMove: handleMove, onAction: handleAction });
 
   const handleNpcClick = (npc) => {
     if (dialogue || encounter) return;
+    const position = getNpcPosition(npc, npcPositions);
     const adjacent =
-      Math.abs(npc.row - player.row) + Math.abs(npc.col - player.col) === 1;
+      Math.abs(position.row - player.row) +
+        Math.abs(position.col - player.col) ===
+      1;
     if (adjacent) openDialogue(npc);
   };
 
   const inTallGrass = MAP[player.row][player.col] === 'W';
+  const mapWidth = COLS * TILE_SIZE;
+  const mapHeight = ROWS * TILE_SIZE;
+  const cameraX = clampCameraOffset(
+    viewport.width / 2 - (player.col + 0.5) * TILE_SIZE,
+    viewport.width,
+    mapWidth
+  );
+  const cameraY = clampCameraOffset(
+    viewport.height / 2 - (player.row + 0.5) * TILE_SIZE,
+    viewport.height,
+    mapHeight
+  );
 
   return (
     <div className={styles.screen}>
-      <div className={styles.bgDecor}>
-        {BG_TREES.map(([left, top], i) => (
-          <div key={i} className={styles.bgTree} style={{ left, top }} />
-        ))}
-        {BG_HOUSES.map(([left, top], i) => (
-          <div key={i} className={styles.bgHouse} style={{ left, top }} />
-        ))}
-      </div>
-
       <SkipLink />
 
       <div className={styles.gameFrame}>
-        <div
-          className={styles.world}
-          style={{ width: COLS * TILE_SIZE, height: ROWS * TILE_SIZE }}
-        >
-          <Map />
-          {NPCS.map((npc) => (
-            <NPC key={npc.id} npc={npc} onClick={() => handleNpcClick(npc)} />
-          ))}
-          <Player
-            row={player.row}
-            col={player.col}
-            facing={player.facing}
-            walkFrame={walkFrame}
-            moving={moving}
-          />
-          {inTallGrass && (
-            <div
-              key={grassStep}
-              className={styles.rustle}
-              style={{
-                left: player.col * TILE_SIZE,
-                top: player.row * TILE_SIZE,
-                zIndex: 11 + player.row,
-              }}
+        <div className={styles.world}>
+          <div
+            className={styles.mapLayer}
+            style={{
+              width: mapWidth,
+              height: mapHeight,
+              transform: `translate3d(${cameraX}px, ${cameraY}px, 0)`,
+            }}
+          >
+            <Map />
+            {NPCS.map((npc) => {
+              const position = getNpcPosition(npc, npcPositions);
+              return (
+                <NPC
+                  key={npc.id}
+                  npc={{ ...npc, ...position }}
+                  onClick={() => handleNpcClick(npc)}
+                />
+              );
+            })}
+            <Player
+              row={player.row}
+              col={player.col}
+              facing={player.facing}
+              walkFrame={walkFrame}
+              moving={moving}
             />
-          )}
+            {inTallGrass && (
+              <div
+                key={grassStep}
+                className={styles.rustle}
+                style={{
+                  left: player.col * TILE_SIZE,
+                  top: player.row * TILE_SIZE,
+                  zIndex: 11 + player.row,
+                }}
+              />
+            )}
+          </div>
 
           {dialogue && (
             <DialogueBox

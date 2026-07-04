@@ -1,23 +1,34 @@
 import styles from '../../styles/Game.module.css';
-import { MAP, HOUSE } from './mapData';
+import { BUILDINGS, COLS, MAP } from './mapData';
 import Tile from './Tile';
 
 export default function Map() {
   return (
     <>
-      <div className={styles.mapGrid}>
+      <div
+        className={styles.mapGrid}
+        style={{ gridTemplateColumns: `repeat(${COLS}, 64px)` }}
+      >
         {MAP.flatMap((rowStr, row) =>
           rowStr.split('').map((type, col) => (
             <Tile key={`${row}-${col}`} type={type} />
           ))
         )}
       </div>
-      <img
-        src="/sprites/house.png"
-        alt=""
-        className={styles.house}
-        style={{ left: HOUSE.left, top: HOUSE.top, width: HOUSE.width, height: HOUSE.height }}
-      />
+      {BUILDINGS.map((building) => (
+        <img
+          key={building.id}
+          src="/sprites/house.png"
+          alt=""
+          className={styles.house}
+          style={{
+            left: building.left,
+            top: building.top,
+            width: building.width,
+            height: building.height,
+          }}
+        />
+      ))}
     </>
   );
 }

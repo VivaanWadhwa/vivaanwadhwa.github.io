@@ -9,6 +9,9 @@ const TILE_CLASS = {
   S: 'tileSign',
   X: 'tileFence',
   H: 'tileHouse',
+  B: 'tileBush',
+  R: 'tileRock',
+  L: 'tileWater',
 };
 
 export default function Tile({ type }) {
