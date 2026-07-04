@@ -16,12 +16,29 @@ const DIRECTIONS = {
 };
 
 const ACTION_KEYS = new Set([' ', 'Enter', 'e', 'E']);
+const INTERACTIVE_SELECTOR = [
+  'a[href]',
+  'button',
+  'input',
+  'textarea',
+  'select',
+  '[role="button"]',
+  '[role="link"]',
+  '[contenteditable]:not([contenteditable="false"])',
+].join(',');
+
+const isInteractiveTarget = (target) =>
+  target instanceof Element && Boolean(target.closest(INTERACTIVE_SELECTOR));
 
 // Global arrow/WASD + action key handling. Handlers receive one call per
 // keydown (browser key-repeat gives held-key movement for free).
 export default function useKeyboardMovement({ onMove, onAction }) {
   useEffect(() => {
     const handleKeyDown = (event) => {
+      if (event.defaultPrevented || isInteractiveTarget(event.target)) {
+        return;
+      }
+
       const dir = DIRECTIONS[event.key];
       if (dir) {
         event.preventDefault();

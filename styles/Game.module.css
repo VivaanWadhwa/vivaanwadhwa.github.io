@@ -57,8 +57,18 @@
 
 .house {
   position: absolute;
-  z-index: 18;
   image-rendering: pixelated;
+  pointer-events: none;
+}
+
+.houseRoof {
+  z-index: 40;
+  clip-path: inset(0 0 96px 0);
+}
+
+.houseFront {
+  z-index: 5;
+  clip-path: inset(256px 0 0 0);
 }
 
 .sprite {

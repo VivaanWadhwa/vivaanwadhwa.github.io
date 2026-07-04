@@ -16,18 +16,30 @@ export default function Map() {
         )}
       </div>
       {BUILDINGS.map((building) => (
-        <img
-          key={building.id}
-          src="/sprites/house.png"
-          alt=""
-          className={styles.house}
-          style={{
-            left: building.left,
-            top: building.top,
-            width: building.width,
-            height: building.height,
-          }}
-        />
+        <div key={building.id}>
+          <img
+            src="/sprites/house.png"
+            alt=""
+            className={`${styles.house} ${styles.houseRoof}`}
+            style={{
+              left: building.left,
+              top: building.top,
+              width: building.width,
+              height: building.height,
+            }}
+          />
+          <img
+            src="/sprites/house.png"
+            alt=""
+            className={`${styles.house} ${styles.houseFront}`}
+            style={{
+              left: building.left,
+              top: building.top,
+              width: building.width,
+              height: building.height,
+            }}
+          />
+        </div>
       ))}
     </>
   );
