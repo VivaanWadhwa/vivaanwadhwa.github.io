@@ -16,7 +16,7 @@ export default function EncounterScene({ phase, onThrow, onDismiss }) {
 
         {phase === 'caught' && (
           <div className={styles.caughtPanel}>
-            <div className={styles.pokeballStatic} />
+            <div className={styles.caughtSprite} />
             <h2 className={styles.caughtTitle}>Gotcha! VIVAAN was caught!</h2>
             <p className={styles.caughtSub}>VIVAAN has been added to your team.</p>
             <div className={styles.caughtLinks}>

@@ -169,8 +169,7 @@
   to { transform: scale(0); opacity: 0.2; }
 }
 
-.pokeball,
-.pokeballStatic {
+.pokeball {
   width: 44px;
   height: 44px;
   border-radius: 50%;
@@ -184,8 +183,7 @@
   position: relative;
 }
 
-.pokeball::after,
-.pokeballStatic::after {
+.pokeball::after {
   content: '';
   position: absolute;
   top: 50%;
@@ -265,6 +263,23 @@
   animation: appear 0.4s ease-out;
 }
 
+.caughtSprite {
+  width: 110px;
+  height: 198px;
+  background-image: url('/sprites/vivaan_battle.png');
+  background-size: 110px 198px;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+  animation: celebrate 0.6s ease-in-out infinite;
+}
+
+@keyframes celebrate {
+  0%, 100% { transform: translateY(0) scaleX(1); }
+  30% { transform: translateY(-16px) scaleX(1); }
+  50% { transform: translateY(-16px) scaleX(-1); }
+  80% { transform: translateY(0) scaleX(-1); }
+}
+
 .caughtTitle {
   margin: 8px 0 0;
   font-size: 24px;
@@ -305,15 +320,15 @@
 
 .skipLink {
   position: fixed;
-  top: 18px;
-  right: 20px;
+  top: 12px;
+  right: 14px;
   z-index: 100;
-  font-size: 14px;
-  letter-spacing: 0.5px;
+  font-size: 11px;
+  letter-spacing: 0.3px;
   color: #64ffda;
   border: 1px solid #64ffda;
   border-radius: 4px;
-  padding: 8px 14px;
+  padding: 5px 9px;
   text-decoration: none;
   background: rgba(10, 15, 30, 0.8);
 }

@@ -4,7 +4,7 @@ import styles from '../../styles/Game.module.css';
 export default function SkipLink() {
   return (
     <Link href="/resume" className={styles.skipLink}>
-      Skip to text version →
+      Go to my website
     </Link>
   );
 }
